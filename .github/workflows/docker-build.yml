@@ -1,0 +1,14 @@
+name: Docker TEST
+on: [push]
+jobs:
+  Docker-Build-Push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout 
+        uses: actions/checkout@v2
+      - name：docker image build
+        run: docker build -t lyhuangj/flask-redis:latest .
+      - name: list docker image
+        run:  docker image ls
+        
+  

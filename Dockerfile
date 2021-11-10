@@ -1,15 +1,18 @@
-FROM python:3.9.5-slim AS builder
+FROM python:3-slim
 
-COPY ./ /app
+RUN pip install flask redis && \
+    groupadd -r flask && useradd -r -g flask flask && \
+    mkdir /src && \
+    chown -R flask:flask /src
 
-WORKDIR /app
+USER flask
 
-RUN pip install -r requirements.txt && \
-    apt-get update && apt-get install -y build-essential && \
-    make html
+COPY app.py /src/app.py
 
+WORKDIR /src
 
-FROM nginx:alpine
+ENV FLASK=app.py
 
-COPY --from=builder /app/build/html /usr/share/nginx/html
+EXPOSE 5000
 
+CMD ["flask", "run", "-h", "0.0.0.0"]
