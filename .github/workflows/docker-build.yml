@@ -6,9 +6,9 @@ jobs:
     steps:
       - name: checkout 
         uses: actions/checkout@v2
-      - name：docker image build
+      - name: docker image build
         run: docker build -t lyhuangj/flask-redis:latest .
       - name: list docker image
         run:  docker image ls
-        
+
   
